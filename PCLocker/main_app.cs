@@ -11,29 +11,27 @@ public class PCLMng
 		using (var client = new WebClient())
 		{
 			try
-			{	ServicePointManager.Expect100Continue = true;
+			{	
+				ServicePointManager.Expect100Continue = true;
 				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 				var contents = client.DownloadString("https://github.com/rysiu2007/Tuanminh-project/releases");
 				const string currentv = "v1.1";
-				string[] versions = {"v1.0", "v1.1", "v1.2"};
-				int i = 1;
+				string[] versions = {"1.0", "v1.1", "v1.2"};
+				int i = 0;
 				for (; i < 3; i++)
 				{
-					if (!contents.Contains(versions[i]))
-					{
-						break;
-					}
+					if (!contents.Contains(versions[i])) {break;}
 				}
-				var newestv = versions[i - 1];
-				string[] curr = currentv.Split('v','.');
-				string[] newv = newestv.Split('v','.');
+				var newestv = versions[i-1];
+				string[] curr = currentv.Split('v');
+				string[] newv = newestv.Split('v');
 				float current = float.Parse(curr[1], CultureInfo.InvariantCulture);
 				float newest = float.Parse(newv[1], CultureInfo.InvariantCulture);
 				if (newest > current)
 				{
 					return "There's newer version of PCLocker! Go to https://github.com/rysiu2007/Tuanminh-project/releases to download the newest version";
 				}
-				else
+				else 
 				{
 					return "You have the newest version of PCLocker!";
 				}
